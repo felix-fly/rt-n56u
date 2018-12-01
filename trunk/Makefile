@@ -51,6 +51,9 @@ UNSQSHFS_TOOL  = $(ROOTDIR)/tools/bin/unsquashfs_xz-4.0
 MERGE_DIR      = $(ROOTDIR)/merge
 MERGE_ROOTFS   = $(MERGE_DIR)/$(CONFIG_FIRMWARE_PRODUCT_ID)/rootfs
 
+# Set toolchain path relative
+TOOLCHAIN_DIR  = $(ROOTDIR)/../toolchain-mipsel
+
 #NUM MAKE PROCESS = CPU NUMBER IN THE SYSTEM * CPU_OVERLOAD
 CPU_OVERLOAD	= 1
 HOST_NCPU	= $(shell if [ -f /proc/cpuinfo ]; then n=`grep -c processor /proc/cpuinfo`; if [ $$n -gt 1 ];then expr $$n \* ${CPU_OVERLOAD}; else echo $$n; fi; else echo 1; fi)
@@ -68,7 +71,7 @@ endif
 
 ifneq ($(findstring linux-3.4,$(LINUXDIR)),)
 FIRMWARE_KERNEL_VER="3.4"
-CONFIG_CROSS_COMPILER_ROOT = $(CONFIG_TOOLCHAIN_DIR)/toolchain-3.4.x
+CONFIG_CROSS_COMPILER_ROOT = $(TOOLCHAIN_DIR)/toolchain-3.4.x
 CONFIG_CROSS_COMPILER_PATH = $(CONFIG_CROSS_COMPILER_ROOT)/bin
 KERNEL_HEADERS_PATH = $(CONFIG_CROSS_COMPILER_ROOT)/include
 endif
