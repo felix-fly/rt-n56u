@@ -3,7 +3,7 @@ SRC_NAME=openssl-1.0.2
 # openssl use CROSS_COMPILE prefix
 CC=gcc $(CPUFLAGS)
 
-COPTS=-ffunction-sections -fdata-sections -Wl,--gc-sections -I$(DESTDIR)/include
+COPTS=$(CFLAGS) -ffunction-sections -fdata-sections -Wl,--gc-sections -I$(DESTDIR)/include
 COPTS+=$(if $(CONFIG_IPV6),-DOPENSSL_USE_IPV6=1,)
 COPTS+=-DOPENSSL_SMALL_FOOTPRINT
 
@@ -12,27 +12,34 @@ LOPTS=-Wl,--gc-sections -L$(DESTDIR)/lib
 OPENSSL_APPS =
 
 OPENSSL_CIPHERS = no-capieng no-cms no-gmp no-jpake no-rfc3779 no-seed \
-                  no-ec2m no-err no-threads no-idea no-rc5 no-ripemd no-rmd160 \
+                  no-ec2m no-err no-idea no-rc5 no-ripemd no-rmd160 \
                   no-static-engine no-hw no-md2 no-sse2 no-dso no-ts no-sha0 no-mdc2 no-krb5 \
                   no-smime no-ans1 no-cast no-whirlpool no-sctp no-srp no-ssl2 no-ssl3
+
+#ifneq ($(CONFIG_FIRMWARE_INCLUDE_TOR),y)
+OPENSSL_CIPHERS += no-threads
+#endif
 
 ifdef CONFIG_CRYPTO_DEV_LINUX
 COPTS+=-DHAVE_CRYPTODEV
 else
 OPENSSL_APPS += no-speed
-#OPENSSL_CIPHERS += no-engine
+#ifneq ($(CONFIG_FIRMWARE_INCLUDE_TOR),y)
+OPENSSL_CIPHERS += no-engine
+#endif
 endif
 
 ifneq ($(CONFIG_FIRMWARE_INCLUDE_SSWAN),y)
 OPENSSL_CIPHERS += no-rc2
 endif
 
-ifneq ($(CONFIG_FIRMWARE_INCLUDE_OPENSSL_EC),y)
+ifeq (,$(filter y,$(CONFIG_FIRMWARE_INCLUDE_OPENSSL_EC) $(CONFIG_FIRMWARE_INCLUDE_TOR)))
 OPENSSL_CIPHERS += no-ec
 endif
 
 all: config_test
-	$(MAKE) -C $(SRC_NAME)
+	$(MAKE) -C $(SRC_NAME) depend
+	$(MAKE) -j$(HOST_NCPU) -C $(SRC_NAME)
 
 config_test:
 	( if [ -f ./config_done ]; then \
@@ -56,13 +63,18 @@ configure:
 	)
 
 clean:
-	$(MAKE) -C $(SRC_NAME) clean; \
+	$(MAKE) -C $(SRC_NAME) distclean
 	rm -f config_done
 
 install:
 	$(MAKE) -C $(SRC_NAME) install DESTDIR="$(STAGEDIR)"
+	# remove unneeded
 	rm -f $(DESTDIR)/lib/libssl.a
 	rm -f $(DESTDIR)/lib/libcrypto.a
+	# fix pkgconfig
+	sed -i 's,^prefix=.*,prefix=$(STAGEDIR),g' $(STAGEDIR)/lib/pkgconfig/libcrypto.pc
+	sed -i 's,^prefix=.*,prefix=$(STAGEDIR),g' $(STAGEDIR)/lib/pkgconfig/libssl.pc
+	sed -i 's,^prefix=.*,prefix=$(STAGEDIR),g' $(STAGEDIR)/lib/pkgconfig/openssl.pc
 
 romfs:
 	cp -fP $(DESTDIR)/lib/libssl.so* $(ROMFSDIR)/lib

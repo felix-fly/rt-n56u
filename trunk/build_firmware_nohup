@@ -1,10 +1,4 @@
 #!/bin/sh
-[ -z "$1" ] && echo "Please run '$0 PRODUCT_NAME' to start build (see 'configs/templates/') " && exit 1 
-if [ ! -f configs/templates/$1.config ] ; then
-	echo "configs/templates/$1.config not found "
-	exit 1
-fi
-
 ./build_firmware_modify $1 > build.log 2>&1 &
 
 while true ;do
@@ -14,7 +8,7 @@ while true ;do
 
 	if [ -z "$process_status" ] ;then
 		echo "Build script is exit"
-		if [ "$(tail -1 build.log)" = "make[1]: Leaving directory \`/opt/rt-n56u/trunk/vendors'" ]; then
+		if [ "$(tail -1 build.log)" = "make[1]: Leaving directory '/opt/rt-n56u/trunk/vendors'" ]; then
 			tail -20 build.log && exit 0
 		else
 			tail -60 build.log && exit 1

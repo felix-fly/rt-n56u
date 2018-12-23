@@ -1,8 +1,8 @@
-SRC_NAME=curl-7.61.0
-SRC_URL=https://github.com/curl/curl/releases/download/curl-7_61_0/curl-7.61.0.tar.gz
+SRC_NAME=curl-7.62.0
+SRC_URL=https://github.com/curl/curl/releases/download/curl-7_62_0/curl-7.62.0.tar.gz
 
 all: download_test extract_test config_test
-	$(MAKE) -C $(SRC_NAME)
+	$(MAKE) -j$(HOST_NCPU) -C $(SRC_NAME)
 	
 download_test:
 	( if [ ! -f $(SRC_NAME).tar.gz ]; then \
@@ -53,9 +53,10 @@ configure:
 		--without-libssh2 \
 		--without-krb4 \
 		--without-nss \
+		--without-ssl \
 		--with-random=/dev/urandom \
 		--with-zlib=$(STAGEDIR) \
-		--with-ssl=$(STAGEDIR) \
+		--with-mbedtls=$(STAGEDIR) \
 		--host=$(HOST_TARGET) \
 		--build=$(HOST_BUILD) ; \
 	)

@@ -144,7 +144,7 @@ endif
 
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_CURL),y)
 LIBS_INCLUDE_CURL=y
-LIBS_INCLUDE_LIBSSL=y
+LIBS_INCLUDE_MBEDTLS=y
 endif
 
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_HTOP),y)
@@ -157,13 +157,6 @@ endif
 
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_TCPDUMP),y)
 LIBS_INCLUDE_LIBPCAP=y
-endif
-
-ifeq ($(CONFIG_FIRMWARE_INCLUDE_DNSMASQ_CHINA_CONF),y)
-LIBS_INCLUDE_LIBSSL=y
-ifneq ($(CONFIG_FIRMWARE_INCLUDE_CURL),y)
-CONFIG_FIRMWARE_INCLUDE_OPENSSL_EXE=y
-endif
 endif
 
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_MINIEAP),y)
@@ -211,6 +204,7 @@ dir_$(LIBS_INCLUDE_LIBPCRE)			+= libpcre
 dir_$(LIBS_INCLUDE_LIBEV)			+= libev
 dir_$(LIBS_INCLUDE_LIBSODIUM)			+= libsodium
 dir_$(LIBS_INCLUDE_LIBUDNS)			+= libudns
+dir_$(LIBS_INCLUDE_MBEDTLS)			+= mbedtls
 dir_$(LIBS_INCLUDE_CURL)			+= libcurl
 dir_y						+= libnfnetlink
 ifeq ($(CONFIG_WITHOUT_IW),y)
@@ -238,7 +232,6 @@ dir_$(CONFIG_FIRMWARE_INCLUDE_TRANSMISSION)	+= libevent
 # aria2 shared libs
 dir_$(LIBS_INCLUDE_LIBXML2)		+= libxml2
 
-dir_$(LIBS_INCLUDE_MBEDTLS)		+= mbedtls
 dir_$(LIBS_INCLUDE_C_ARES)		+= c-ares
 dir_$(LIBS_INCLUDE_READLINE)		+= readline
 

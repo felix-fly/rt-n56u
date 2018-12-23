@@ -28,7 +28,7 @@ Contributors of this project are not responsible for what happens next.
 
 ### 固件特点 ###
 - 使用[gorden5566](https://github.com/gorden5566/padavan)的汉化字典
-- [aria2](https://github.com/aria2/aria2)源码更新到1.17.1,预编译二进制文件为1.33.1 ```CONFIG_FIRMWARE_INCLUDE_ARIA2_NEW_PREBUILD_BIN```
+- [aria2](https://github.com/aria2/aria2)可选使用较新版本的预编译程序 ```CONFIG_FIRMWARE_INCLUDE_ARIA2_NEW_PREBUILD_BIN```
 - aria2前端更换为[AriaNg](https://github.com/mayswind/AriaNg)
 - [curl](https://github.com/curl/curl)可选编译可执行程序```CONFIG_FIRMWARE_INCLUDE_CURL```
 - 使用了[PROMETHEUS](http://pm.freize.net/index.html)提供的部分补丁，包括新版本的类库、软件包和WIFI驱动补丁```CONFIG_APPLY_PROMETHEUS_WIFI_DRIVER_PATCH```
@@ -44,9 +44,7 @@ Contributors of this project are not responsible for what happens next.
 >- [ss-server](https://github.com/shadowsocks/shadowsocks-libev) ```CONFIG_FIRMWARE_INCLUDE_SSSERVER```
 >- [softether-vpnclient](https://github.com/SoftEtherVPN/SoftEtherVPN_Stable) ```CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_CLIENT```
 >- [softether-vpncmd](https://github.com/SoftEtherVPN/SoftEtherVPN_Stable) ```CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_CMD```
->- [dnsmasq-china-list](https://github.com/felixonmars/dnsmasq-china-list) ```CONFIG_FIRMWARE_INCLUDE_DNSMASQ_CHINA_CONF```
 >- [dns-forwarder](https://github.com/aa65535/hev-dns-forwarder) ```CONFIG_FIRMWARE_INCLUDE_DNSFORWARDER```
->- [ChinaDNS](https://github.com/aa65535/ChinaDNS) ```CONFIG_FIRMWARE_INCLUDE_CHINADNS```
 >- [vlmcsd](https://github.com/hanwckf/vlmcsd) ```CONFIG_FIRMWARE_INCLUDE_VLMCSD```
 >- [ttyd](https://github.com/tsl0922/ttyd) ```CONFIG_FIRMWARE_INCLUDE_TTYD```
 >- [lrzsz](https://ohse.de/uwe/software/lrzsz.html) ```CONFIG_FIRMWARE_INCLUDE_LRZSZ```
@@ -66,6 +64,7 @@ Contributors of this project are not responsible for what happens next.
 >- K2P_DRV/K2P_nano (128M)
 >- MZ-R13 (64M)
 >- MZ-R13P (未测试,64M)
+>- HC5661A (128M)
 >- OYE-001 (128M,USB)
 >- MI-MINI (未测试,128M,USB)
 >- MI-3 (未测试,128M,USB)

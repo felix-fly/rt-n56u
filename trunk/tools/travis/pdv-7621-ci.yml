@@ -1,6 +1,4 @@
-group: deprecated-2017Q4
-
-dist: trusty
+dist: xenial
 
 sudo: required
 
@@ -11,7 +9,7 @@ compiler:
 
 install:
     - sudo apt-get update -qq
-    - sudo apt-get install -qq p7zip-full autoconf automake bison build-essential flex gawk gettext gperf libtool pkg-config zlib1g-dev libgmp3-dev libmpc-dev libmpfr-dev texinfo python-docutils libncurses5-dev autopoint curl
+    - sudo apt-get install -qq p7zip-full autoconf automake bison build-essential flex gawk gettext gperf libtool pkg-config zlib1g-dev libgmp3-dev libmpc-dev libmpfr-dev texinfo python-docutils libncurses5-dev autopoint curl libltdl-dev cmake
 
 before_script:
     - cd /opt && sudo mkdir images && sudo git clone --depth=1 https://github.com/hanwckf/rt-n56u.git
@@ -21,11 +19,11 @@ before_script:
     - cd /opt/rt-n56u/trunk/
 
 script:
-    - sudo bash ./build_firmware_nohup WR1200JS && sudo cp -f images/*.trx /opt/images
-    - sudo bash ./clear_tree_simple >/dev/null 2>&1 && sudo bash ./build_firmware_nohup NEWIFI3 && sudo cp -f images/*.trx /opt/images
-    - sudo bash ./clear_tree_simple >/dev/null 2>&1 && sudo bash ./build_firmware_nohup K2P && sudo cp -f images/*.trx /opt/images
+    - sudo bash ./build_firmware_nohup K2P && sudo cp -f images/*.trx /opt/images
     - sudo bash ./clear_tree_simple >/dev/null 2>&1 && sudo bash ./build_firmware_nohup K2P_DRV && sudo cp -f images/*.trx /opt/images/K2P_DRV_3.4.3.9-099.trx
     - sudo bash ./clear_tree_simple >/dev/null 2>&1 && sudo bash ./build_firmware_nohup K2P_nano && sudo cp -f images/*.trx /opt/images/K2P_nano_3.4.3.9-099.trx
+    - sudo bash ./clear_tree_simple >/dev/null 2>&1 && sudo bash ./build_firmware_nohup WR1200JS && sudo cp -f images/*.trx /opt/images
+    - sudo bash ./clear_tree_simple >/dev/null 2>&1 && sudo bash ./build_firmware_nohup NEWIFI3 && sudo cp -f images/*.trx /opt/images
 
 after_script:
     - GIT_VERSION=`git rev-parse --short=7 HEAD 2>/dev/null` && [ -n "$GIT_VERSION" ] && image_name=images_mt7621_$GIT_VERSION || image_name=images_mt7621

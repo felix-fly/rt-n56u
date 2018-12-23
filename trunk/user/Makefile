@@ -94,9 +94,6 @@ endif
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)
 CHNROUTE_ENABLED=y
 endif
-ifeq ($(CONFIG_FIRMWARE_INCLUDE_CHINADNS),y)
-CHNROUTE_ENABLED=y
-endif
 
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_CMD),y)
 SOFTETHERVPN_ENABLE=y
@@ -155,6 +152,7 @@ dir_y						+= xl2tpd
 dir_$(CONFIG_FIRMWARE_INCLUDE_RPL2TP)		+= rp-l2tp
 dir_y						+= lldt
 dir_y						+= scripts
+dir_y						+= util-linux
 dir_$(OPENSSH_ENABLED)				+= openssh
 dir_$(DROPBEAR_ENABLED)				+= dropbear
 dir_$(HTOP_ENABLE)					+= htop
@@ -174,12 +172,10 @@ dir_$(TTYD_ENABLED)					+= ttyd
 dir_$(SOFTETHERVPN_ENABLE)			+= softethervpn
 dir_$(CONFIG_FIRMWARE_INCLUDE_SCUTCLIENT)         += scutclient
 dir_$(CONFIG_FIRMWARE_INCLUDE_VLMCSD)			+= vlmcsd
-dir_$(CONFIG_FIRMWARE_INCLUDE_CHINADNS)		+= chinadns
 dir_$(CONFIG_FIRMWARE_INCLUDE_DNSFORWARDER)		+= dns-forwarder
 dir_$(SHADOWSOCKS_ENABLE)				+= shadowsocks
 dir_$(CONFIG_FIRMWARE_INCLUDE_LRZSZ)			+= lrzsz
 dir_$(CONFIG_FIRMWARE_INCLUDE_GDUT_DRCOM)		+= gdut-drcom
-dir_$(CONFIG_FIRMWARE_INCLUDE_DNSMASQ_CHINA_CONF)	+= dnsmasq-china-conf
 dir_$(CONFIG_FIRMWARE_INCLUDE_DOGCOM)			+= dogcom
 dir_$(CONFIG_FIRMWARE_INCLUDE_IPERF)			+= iperf
 dir_$(CONFIG_FIRMWARE_INCLUDE_IPERF3)			+= iperf3
@@ -202,7 +198,6 @@ endif
 
 ifeq ($(STORAGE_ENABLED),y)
 dir_y						+= nfsd
-dir_y						+= util-linux
 dir_y						+= optware
 dir_$(FS_EXT_ENABLED)				+= e2fsprogs
 dir_$(FS_FAT_ENABLED)				+= dosfstools
@@ -217,7 +212,6 @@ endif
 
 ifdef CONFIG_MTD_UBI
 ifneq ($(STORAGE_ENABLED),y)
-dir_y						+= util-linux
 dir_y						+= optware
 endif
 dir_y						+= mtd-utils
