@@ -1,8 +1,8 @@
 SRC_NAME=aria2-1.17.1
 BIN_DIR_NAME=aria2-1.34.0
 
-SRC_ARIA_NG_NAME=AriaNg-1.0.0
-SRC_ARIA_NG_URL=https://github.com/mayswind/AriaNg/releases/download/1.0.0/AriaNg-1.0.0.zip
+SRC_ARIA_NG_NAME=AriaNg-1.0.0-AllInOne
+SRC_ARIA_NG_URL=https://github.com/mayswind/AriaNg/releases/download/1.0.0/AriaNg-1.0.0-AllInOne.zip
 
 CFLAGS  += -ffunction-sections -fdata-sections
 CXXFLAGS += -ffunction-sections -fdata-sections
@@ -28,7 +28,8 @@ endif
 extract_test:
 ifneq ($(CONFIG_FIRMWARE_INCLUDE_ARIA2_NEW_PREBUILD_BIN),y)
 	( if [ ! -d $(SRC_NAME) ]; then \
-		tar zxf $(SRC_NAME).tar.gz; \
+		tar xf $(SRC_NAME).tar.gz; \
+		patch -d $(SRC_NAME) -p1 -i ../disable-doc-test.patch; \
 	fi )
 endif
 
@@ -73,7 +74,6 @@ clean:
 	fi ; \
 	rm -rf ariaweb
 	rm -f config_done
-	rm -rf install
 
 romfs:
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_ARIA_WEB_CONTROL),y)
